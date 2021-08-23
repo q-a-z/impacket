@@ -52,12 +52,18 @@ from impacket import version, smbserver
 from impacket.dcerpc.v5 import transport, scmr
 from impacket.krb5.keytab import Keytab
 
+#added some string obfuscation
+import random
+import string
+
 OUTPUT_FILENAME = '__output'
-BATCH_FILENAME  = 'execute.bat'
+BATCH_FILENAME  = 'execute.cmd' #cmd is better
 SMBSERVER_DIR   = '__tmp'
 DUMMY_SHARE     = 'TMP'
-SERVICE_NAME    = 'BTOBTO'
+SERVICE_NAME    = random8 #Randomised service name by default.
 CODEC = sys.stdout.encoding
+
+random8 = ''.join([random.choice(string.ascii_letters) for _ in range(8)])
 
 class SMBServer(Thread):
     def __init__(self):
@@ -349,6 +355,9 @@ if __name__ == '__main__':
     group.add_argument('-aesKey', action="store", metavar = "hex key", help='AES key to use for Kerberos Authentication '
                                                                             '(128 or 256 bits)')
     group.add_argument('-keytab', action="store", help='Read keys for SPN from keytab file')
+
+
+
 
 
     if len(sys.argv)==1:
